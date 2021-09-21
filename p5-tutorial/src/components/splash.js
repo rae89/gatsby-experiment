@@ -65,7 +65,9 @@ export default function Spalsh() {
   `
 
   const Icon = styled.div`
-    background: green;
+    background: rgba(255, 255, 255, 0)
+      url("https://img.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/2008794.png")
+      no-repeat center/100%;
     width: 76px;
     height: 76px;
     top: -200px;
