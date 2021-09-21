@@ -73,7 +73,9 @@ export default function Spalsh() {
     top: -200px;
     margin: 0 auto;
     position: relative;
-    animation: ${rotatecircle} 4s infinite linear;
+    &:hover {
+      animation: ${rotatecircle} 4s infinite linear;
+    }
   `
   return (
     <div>
