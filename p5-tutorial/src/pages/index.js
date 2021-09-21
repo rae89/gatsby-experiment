@@ -1,11 +1,12 @@
-import React from "react";
-import P5 from "../components/p5";
+import React from "react"
+import Layout from "../components/layout"
+import Splash from "../components/splash"
+import P5 from "../components/p5"
 
 const IndexPage = () => (
-    <div>
-        <P5/>
-    </div>
+  <Layout>
+    <Splash></Splash>
+  </Layout>
+)
 
-  )
-
-  export default IndexPage
+export default IndexPage
