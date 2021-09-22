@@ -4,35 +4,35 @@ import styled, { keyframes } from "styled-components"
 export default function Spalsh() {
   const spinPulse = keyframes`
     0% {
-      -moz-transform: rotate(160deg);
+      transform: rotate(160deg);
       opacity: 0;
       box-shadow: 0 0 1px #bdd73c;
     }
     50% {
-      -moz-transform: rotate(145deg);
+      transform: rotate(145deg);
       opacity: 1;
     }
     100% {
-      -moz-transform: rotate(-320deg);
+      transform: rotate(-320deg);
       opacity: 0;
     }
   `
 
   const spinoffPulse = keyframes`
     0% {
-      -moz-transform: rotate(0deg);
+      transform: rotate(0deg);
     }
     100% {
-      -moz-transform: rotate(360deg);
+      transform: rotate(360deg);
     }
   `
 
   const rotatecircle = keyframes`
     0% {
-      -moz-transform: rotate(0deg);
+      transform: rotate(0deg);
     }
     100% {
-      -moz-transform: rotate(-360deg);
+      transform: rotate(-360deg);
     }
   `
 
