@@ -1,16 +1,16 @@
-const axios = require("axios")
-const crypto = require("crypto")
+const axios = require("axios");
+const crypto = require("crypto");
 
 exports.sourceNodes = async ({ actions }) => {
-  const { createNode } = actions
+  const { createNode } = actions;
 
   //fetch raw data from the opensea api
   const fetchAssets = () =>
     axios.get(
       `https://api.opensea.io/api/v1/assets/?asset_contract_address=0x06012c8cf97bead5deae237070f9587f8e7a266d`
-    )
+    );
   // await for results
-  const res = await fetchAssets()
+  const res = await fetchAssets();
 
   // map into these results and create nodes
   res.data["assets"].map((asset, i) => {
@@ -52,19 +52,19 @@ exports.sourceNodes = async ({ actions }) => {
       is_presale: asset.is_presale,
       transfer_fee_payment_token: asset.transfer_fee_payment_token,
       transfer_fee: asset.transfer_fee,
-    }
+    };
 
     // Get content digest of node. (Required field)
     const contentDigest = crypto
       .createHash(`md5`)
       .update(JSON.stringify(assetNode))
-      .digest(`hex`)
+      .digest(`hex`);
     // add it to assetNode
-    assetNode.internal.contentDigest = contentDigest
+    assetNode.internal.contentDigest = contentDigest;
 
     // Create node with the gatsby createNode() API
-    createNode(assetNode)
-  })
+    createNode(assetNode);
+  });
 
-  return
-}
+  return;
+};
