@@ -1,5 +1,5 @@
-import React from "react"
-import styled, { keyframes } from "styled-components"
+import React from "react";
+import styled, { keyframes } from "styled-components";
 
 export default function Spalsh() {
   const spinPulse = keyframes`
@@ -16,7 +16,7 @@ export default function Spalsh() {
       transform: rotate(-320deg);
       opacity: 0;
     }
-  `
+  `;
 
   const spinoffPulse = keyframes`
     0% {
@@ -25,7 +25,7 @@ export default function Spalsh() {
     100% {
       transform: rotate(360deg);
     }
-  `
+  `;
 
   const rotatecircle = keyframes`
     0% {
@@ -34,7 +34,7 @@ export default function Spalsh() {
     100% {
       transform: rotate(-360deg);
     }
-  `
+  `;
 
   const OutterCircle = styled.div`
     background-color: transparent;
@@ -46,8 +46,10 @@ export default function Spalsh() {
     width: 103px;
     height: 103px;
     margin: 0 auto;
+    top: 320px;
+    position: relative;
     animation: ${spinPulse} 1s infinite linear;
-  `
+  `;
 
   const InnerCircle = styled.div`
     background-color: transparent;
@@ -56,32 +58,32 @@ export default function Spalsh() {
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-radius: 100px;
-    top: -110px;
+    top: 210px;
     width: 92px;
     height: 92px;
     margin: 0 auto;
     position: relative;
     animation: ${spinoffPulse} 1s infinite linear;
-  `
+  `;
 
   const Icon = styled.div`
     background: rgba(255, 255, 255, 0)
       url("https://img.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/2008794.png")
       no-repeat center/100%;
     width: 76px;
-    height: 76px;
+    height: 700px;
     top: -200px;
     margin: 0 auto;
     position: relative;
     &:hover {
       animation: ${rotatecircle} 4s infinite linear;
     }
-  `
+  `;
   return (
     <div>
       <OutterCircle />
       <InnerCircle />
       <Icon />
     </div>
-  )
+  );
 }
