@@ -2,8 +2,7 @@ import React from "react";
 import { GatsbyImage } from "gatsby-plugin-image";
 import Img from "gatsby-image";
 import { ImageList, ImageListItem } from "@mui/material";
-
-import { graphql } from "gatsby";
+import { graphql, navigate } from "gatsby";
 import Layout from "../components/layout";
 
 const GalleryPage = (props) => {
@@ -25,7 +24,12 @@ const GalleryPage = (props) => {
         {tokens.map((token, i) => {
           const tokenData = token.node;
           return (
-            <ImageListItem key={i}>
+            <ImageListItem
+              key={i}
+              onClick={() =>
+                navigate(`/profile/${tokenData.id}`, { state: { tokenData } })
+              }
+            >
               <img src={tokenData.image_thumbnail_url} />
             </ImageListItem>
           );

@@ -1,5 +1,7 @@
 const axios = require("axios");
 const crypto = require("crypto");
+const path = require("path");
+// const graphql = require("gatsby");
 
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions;
@@ -67,4 +69,30 @@ exports.sourceNodes = async ({ actions }) => {
   });
 
   return;
+};
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions;
+
+  const result = await graphql(`
+    query MyQuery {
+      allNftAssets(filter: { id: {} }) {
+        edges {
+          node {
+            id
+            image_thumbnail_url
+          }
+        }
+      }
+    }
+  `);
+  const tokens = result.data.allNftAssets.edges;
+  tokens.forEach((token) => {
+    const tokenData = token.node;
+    createPage({
+      path: `/profile/${tokenData.id}`,
+      component: path.resolve(`src/components/profile.js`),
+      context: { token: tokenData },
+    });
+  });
 };
