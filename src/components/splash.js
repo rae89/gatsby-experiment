@@ -71,8 +71,8 @@ export default function Spalsh() {
       url("https://lh3.googleusercontent.com/S8IkXht94PZC_NqYwmHAUehx2_r2pDgr_sLYkC8CdVBvHKSGsR4OKtneJVbiLuuaXoI27cB77KGgf9p7qiw6Q6--=s128")
       no-repeat center/100%;
     width: 76px;
-    height: 700px;
-    top: -400px;
+    height: 100px;
+    top: -98px;
     margin: 0 auto;
     position: relative;
     &:hover {

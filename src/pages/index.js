@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Button, Link } from "gatsby-theme-material-ui";
 import { Box, Container } from "@material-ui/core";
 import { navigate } from "gatsby-link";
+import { Stack } from "@mui/material";
 
 export default function IndexPage() {
   return (
@@ -15,7 +16,7 @@ export default function IndexPage() {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          minHeight="40vh"
+          minHeight="20vh"
         >
           <Button
             size="large"
@@ -31,7 +32,7 @@ export default function IndexPage() {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          minHeight="100vh"
+          minHeight="10vh"
         >
           <Splash></Splash>
         </Box>
