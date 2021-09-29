@@ -46,7 +46,7 @@ export default function Spalsh() {
     width: 103px;
     height: 103px;
     margin: 0 auto;
-    top: 320px;
+    top: 100px;
     position: relative;
     animation: ${spinPulse} 1s infinite linear;
   `;
@@ -58,7 +58,7 @@ export default function Spalsh() {
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-radius: 100px;
-    top: 210px;
+    top: 1px;
     width: 92px;
     height: 92px;
     margin: 0 auto;
@@ -68,11 +68,11 @@ export default function Spalsh() {
 
   const Icon = styled.div`
     background: rgba(255, 255, 255, 0)
-      url("https://img.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/2008794.png")
+      url("https://lh3.googleusercontent.com/S8IkXht94PZC_NqYwmHAUehx2_r2pDgr_sLYkC8CdVBvHKSGsR4OKtneJVbiLuuaXoI27cB77KGgf9p7qiw6Q6--=s128")
       no-repeat center/100%;
     width: 76px;
     height: 700px;
-    top: -200px;
+    top: -400px;
     margin: 0 auto;
     position: relative;
     &:hover {
