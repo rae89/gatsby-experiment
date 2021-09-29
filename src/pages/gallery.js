@@ -1,51 +1,67 @@
 import React from "react";
-import { GatsbyImage } from "gatsby-plugin-image";
-import Img from "gatsby-image";
 import { ImageList, ImageListItem } from "@mui/material";
 import { graphql, navigate } from "gatsby";
 import Layout from "../components/layout";
+import { Box, Container } from "@material-ui/core";
 
 const GalleryPage = (props) => {
   const tokens = props.data.allNftAssets.edges;
 
   return (
     <Layout>
-      <ImageList
-        sx={{
-          ml: "auto",
-          mr: "auto",
-          maxWidth: 600,
-          height: 1200,
-          overflow: "hidden",
-        }}
-        cols={3}
-        rowHeight={164}
-      >
-        {tokens.map((token, i) => {
-          const tokenData = token.node;
-          return (
-            <ImageListItem
-              key={i}
-              onClick={() =>
-                navigate(`/profile/${tokenData.id}`, { state: { tokenData } })
-              }
-            >
-              <img src={tokenData.image_thumbnail_url} />
-            </ImageListItem>
-          );
-        })}
-      </ImageList>
+      <Container>
+        <ImageList
+          sx={{
+            ml: "auto",
+            mr: "auto",
+            maxWidth: "max-content",
+            height: "auto",
+            overflow: "hidden",
+          }}
+          cols={3}
+          rowHeight={220}
+        >
+          {tokens.map((token, i) => {
+            const tokenData = token.node;
+            return (
+              <ImageListItem
+                key={i}
+                onClick={() =>
+                  navigate(`/profile/${tokenData.token_id}`, {
+                    state: { tokenData },
+                  })
+                }
+              >
+                <Container>
+                  <img src={tokenData.image_thumbnail_url} />
+                </Container>
+              </ImageListItem>
+            );
+          })}
+        </ImageList>
+      </Container>
     </Layout>
   );
 };
 
 export const query = graphql`
-  query MyQuery {
-    allNftAssets(filter: { id: {} }) {
+  {
+    allNftAssets {
       edges {
         node {
           id
           image_thumbnail_url
+          image_url
+          token_id
+          token_metadata
+          traits {
+            display_type
+            trait_count
+            trait_type
+          }
+          asset_contract {
+            address
+          }
         }
       }
     }
