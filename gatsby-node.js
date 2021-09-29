@@ -7,7 +7,7 @@ require("dotenv").config({
 });
 const graphql = require("gatsby");
 
-const url = process.env.URL;
+const url = process.env.GATSBY_ETH_URL;
 
 function getContract() {
   var abi_ = [
