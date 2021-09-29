@@ -1,21 +1,92 @@
 const axios = require("axios");
 const crypto = require("crypto");
 const path = require("path");
-// const graphql = require("gatsby");
+const Web3Eth = require("web3-eth");
+require("dotenv").config();
+const graphql = require("gatsby");
+
+const url = process.env.URL;
+
+function getContract() {
+  var abi_ = [
+    {
+      inputs: [
+        { indexed: true, name: "from", type: "address" },
+        { indexed: true, name: "to", type: "address" },
+        { indexed: true, name: "tokenId", type: "uint256" },
+      ],
+      name: "Transfer",
+      type: "event",
+    },
+  ];
+
+  const web3Eth = new Web3Eth(Web3Eth.givenProvider || url);
+  const smartContractAddress = "0x1301566b3cb584e550a02d09562041ddc4989b91";
+  const contract = new web3Eth.Contract(abi_, smartContractAddress);
+  return contract;
+}
+
+async function fetchTranserEvents(contract) {
+  return contract.getPastEvents("Transfer", {
+    fromBlock: "earliest",
+    toBlock: "latest",
+  });
+}
+
+async function getTokens(events) {
+  const tokens = new Set();
+  for (const item of events) {
+    tokens.add(item.returnValues.tokenId);
+  }
+  return Array.from(tokens);
+}
+
+function chunk(arr, chunkSize) {
+  const res = [];
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    const chunk = arr.slice(i, i + chunkSize);
+    res.push(chunk);
+  }
+  return res;
+}
+
+async function getAssets(contract_address, token_ids) {
+  token_params = new URLSearchParams();
+  token_params.append("asset_contract_address", contract_address);
+  for (const id of token_ids) {
+    token_params.append("token_ids", id);
+  }
+  var request = {
+    params: token_params,
+  };
+  try {
+    return await axios.get("https://api.opensea.io/api/v1/assets", request);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function fetchAssets(tokens) {
+  const smartContractAddress = "0x1301566b3cb584e550a02d09562041ddc4989b91";
+  const result = [];
+  token_chunks = chunk(tokens, 30);
+  for (const item of token_chunks) {
+    const response = await getAssets(smartContractAddress, item);
+    result.push(...response.data["assets"]);
+  }
+  return await result;
+}
 
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions;
 
-  //fetch raw data from the opensea api
-  const fetchAssets = () =>
-    axios.get(
-      `https://api.opensea.io/api/v1/assets/?asset_contract_address=0x06012c8cf97bead5deae237070f9587f8e7a266d`
-    );
-  // await for results
-  const res = await fetchAssets();
+  const contract = getContract();
+  const events = await fetchTranserEvents(contract);
+  const tokens = await getTokens(events);
+  const result = await fetchAssets(tokens);
 
   // map into these results and create nodes
-  res.data["assets"].map((asset, i) => {
+  result.map((asset, i) => {
     // Create your node object
     const assetNode = {
       // Required fields
@@ -29,7 +100,7 @@ exports.sourceNodes = async ({ actions }) => {
 
       // Other fields that you want to query with graphql
       opensea_id: asset.id,
-      token_id: asset.id,
+      token_id: asset.token_id,
       num_sales: asset.num_sales,
       background_color: asset.background_color,
       image_url: asset.image_url,
@@ -75,12 +146,23 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
   const result = await graphql(`
-    query MyQuery {
-      allNftAssets(filter: { id: {} }) {
+    {
+      allNftAssets {
         edges {
           node {
             id
             image_thumbnail_url
+            image_url
+            token_id
+            token_metadata
+            traits {
+              display_type
+              trait_count
+              trait_type
+            }
+            asset_contract {
+              address
+            }
           }
         }
       }
@@ -90,7 +172,7 @@ exports.createPages = async ({ graphql, actions }) => {
   tokens.forEach((token) => {
     const tokenData = token.node;
     createPage({
-      path: `/profile/${tokenData.id}`,
+      path: `/profile/${tokenData.token_id}`,
       component: path.resolve(`src/components/profile.js`),
       context: { token: tokenData },
     });
