@@ -16,29 +16,57 @@ export default function ProfilePage({ pageContext }) {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        minHeight="100vh"
+        minHeight="50vh"
       >
         <Stack>
           <Container>
-            <img src={token.image_url} alt="" />
-          </Container>
-          <Container>
-            <Typography variant="h6">Token ID: {token.token_id}</Typography>
-          </Container>
-          <Container>
-            <Button
-              variant="contained"
-              target="_blank"
-              href={token.token_metadata}
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="30vh"
             >
-              Metadata
-            </Button>
+              <img src={token.image_thumbnail_url} alt="" />
+            </Box>
           </Container>
           <Container>
-            <nft-card
-              contractAddress={token.asset_contract.address}
-              tokenId={token.token_id}
-            ></nft-card>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="5vh"
+            >
+              <Typography variant="h6">Token ID: {token.token_id}</Typography>
+            </Box>
+          </Container>
+          <Container>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="5vh"
+            >
+              <Button
+                variant="contained"
+                target="_blank"
+                href={token.token_metadata}
+              >
+                Metadata
+              </Button>
+            </Box>
+          </Container>
+          <Container maxWidth="xs">
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="30vh"
+            >
+              <nft-card
+                contractAddress={token.asset_contract.address}
+                tokenId={token.token_id}
+              ></nft-card>
+            </Box>
           </Container>
         </Stack>
       </Box>

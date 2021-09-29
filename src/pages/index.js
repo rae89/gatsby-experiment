@@ -11,6 +11,7 @@ export default function IndexPage() {
     <Layout>
       <Container>
         <Box
+          component="span"
           display="flex"
           justifyContent="center"
           alignItems="center"
