@@ -2,7 +2,9 @@ const axios = require("axios");
 const crypto = require("crypto");
 const path = require("path");
 const Web3Eth = require("web3-eth");
-require("dotenv").config();
+require("dotenv").config({
+  path: `.env`,
+});
 const graphql = require("gatsby");
 
 const url = process.env.URL;
