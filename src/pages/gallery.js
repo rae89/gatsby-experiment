@@ -3,6 +3,7 @@ import { ImageList, ImageListItem } from "@mui/material";
 import { graphql, navigate } from "gatsby";
 import Layout from "../components/layout";
 import { Box, Container } from "@material-ui/core";
+import { Button } from "gatsby-theme-material-ui";
 
 const GalleryPage = (props) => {
   const tokens = props.data.allNftAssets.edges;
@@ -33,7 +34,9 @@ const GalleryPage = (props) => {
                 }
               >
                 <Container>
-                  <img src={tokenData.image_thumbnail_url} />
+                  <Button onClick={() => navigate("/gallery")}>
+                    <img src={tokenData.image_thumbnail_url} />
+                  </Button>
                 </Container>
               </ImageListItem>
             );

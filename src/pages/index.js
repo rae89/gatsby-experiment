@@ -16,7 +16,11 @@ export default function IndexPage() {
           alignItems="center"
           minHeight="40vh"
         >
-          <Button variant="contained" onClick={() => navigate("/gallery")}>
+          <Button
+            size="large"
+            variant="contained"
+            onClick={() => navigate("/gallery")}
+          >
             Enter
           </Button>
         </Box>
