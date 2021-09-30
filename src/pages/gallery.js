@@ -4,13 +4,15 @@ import { graphql, navigate } from "gatsby";
 import Layout from "../components/layout";
 import { Box, Container } from "@material-ui/core";
 import { Button } from "gatsby-theme-material-ui";
+import Header from "../components/header";
 
 const GalleryPage = (props) => {
   const tokens = props.data.allNftAssets.edges;
 
   return (
     <Layout>
-      <Container>
+      <Header></Header>
+      <div style={{ marginTop: 150 }}>
         <ImageList
           sx={{
             ml: "auto",
@@ -42,7 +44,7 @@ const GalleryPage = (props) => {
             );
           })}
         </ImageList>
-      </Container>
+      </div>
     </Layout>
   );
 };

@@ -4,11 +4,15 @@ import { Box, Container } from "@material-ui/core";
 import { Typography, Stack } from "@mui/material";
 import { Button } from "gatsby-theme-material-ui";
 import Helmet from "react-helmet";
+import Header from "../components/header";
 
 export default function ProfilePage({ pageContext }) {
   const { token } = pageContext;
   return (
     <Layout>
+      <Container maxWidth="lg">
+        <Header></Header>
+      </Container>
       <Helmet>
         <script src="https://unpkg.com/embeddable-nfts/dist/nft-card.min.js"></script>
       </Helmet>
