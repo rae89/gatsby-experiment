@@ -2,13 +2,34 @@ import React from "react";
 import { ImageList, ImageListItem } from "@mui/material";
 import { graphql, navigate } from "gatsby";
 import Layout from "../components/layout";
-import { Box, Container } from "@material-ui/core";
+import { Box, Container, withWidth, isWidthUp } from "@material-ui/core";
 import { Button } from "gatsby-theme-material-ui";
 import Header from "../components/header";
 
 const GalleryPage = (props) => {
   const tokens = props.data.allNftAssets.edges;
 
+  function getCols(screenWidth) {
+    if (isWidthUp("lg", screenWidth)) {
+      return 5;
+    }
+
+    if (isWidthUp("md", screenWidth)) {
+      return 3;
+    }
+
+    if (isWidthUp("sm", screenWidth)) {
+      return 2;
+    }
+
+    if (isWidthUp("xs", screenWidth)) {
+      return 1;
+    }
+
+    return 2;
+  }
+
+  const cols = getCols(props.width); // width is associated when using withWidth()
   return (
     <Layout>
       <Header></Header>
@@ -21,7 +42,7 @@ const GalleryPage = (props) => {
             height: "auto",
             overflow: "hidden",
           }}
-          cols={3}
+          cols={cols}
           rowHeight={220}
         >
           {tokens.map((token, i) => {
@@ -73,4 +94,4 @@ export const query = graphql`
   }
 `;
 
-export default GalleryPage;
+export default withWidth()(GalleryPage);
