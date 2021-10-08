@@ -5,6 +5,7 @@ import Layout from "../components/layout";
 import { Box, Container, withWidth, isWidthUp } from "@material-ui/core";
 import { Button } from "gatsby-theme-material-ui";
 import Header from "../components/header";
+import Img from "gatsby-image";
 
 const GalleryPage = (props) => {
   const tokens = props.data.allNftAssets.edges;
@@ -58,7 +59,7 @@ const GalleryPage = (props) => {
               >
                 <Container>
                   <Button onClick={() => navigate("/gallery")}>
-                    <img src={tokenData.image.childImageSharp.fluid.base64} />
+                    <Img fixed={tokenData.image.childImageSharp.fixed} />
                   </Button>
                 </Container>
               </ImageListItem>
@@ -80,18 +81,8 @@ export const query = graphql`
           }
           image {
             childImageSharp {
-              fluid(quality: 100, pngQuality: 100, maxWidth: 1000) {
-                base64
-                tracedSVG
-                src
-                originalImg
-                originalName
-                presentationHeight
-                presentationWidth
-                sizes
-                srcSet
-                srcSetWebp
-                srcWebp
+              fixed(width: 125, height: 125) {
+                ...GatsbyImageSharpFixed
               }
             }
           }
