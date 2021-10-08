@@ -58,7 +58,7 @@ const GalleryPage = (props) => {
               >
                 <Container>
                   <Button onClick={() => navigate("/gallery")}>
-                    <img src={tokenData.image_thumbnail_url} />
+                    <img src={tokenData.image.childImageSharp.fluid.base64} />
                   </Button>
                 </Container>
               </ImageListItem>
@@ -75,19 +75,37 @@ export const query = graphql`
     allNftAssets {
       edges {
         node {
-          id
-          image_thumbnail_url
-          image_url
-          token_id
-          token_metadata
-          traits {
-            display_type
-            trait_count
-            trait_type
-          }
           asset_contract {
             address
           }
+          image {
+            childImageSharp {
+              fluid(quality: 100, pngQuality: 100, maxWidth: 1000) {
+                base64
+                tracedSVG
+                src
+                originalImg
+                originalName
+                presentationHeight
+                presentationWidth
+                sizes
+                srcSet
+                srcSetWebp
+                srcWebp
+              }
+            }
+          }
+          token_id
+          token_metadata
+          traits {
+            trait_type
+            trait_count
+            display_type
+          }
+          image_original_url
+          image_preview_url
+          image_thumbnail_url
+          image_url
         }
       }
     }
