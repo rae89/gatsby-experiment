@@ -154,19 +154,7 @@ exports.createPages = async ({ graphql, actions }) => {
       allNftAssets {
         edges {
           node {
-            id
-            image_thumbnail_url
-            image_url
             token_id
-            token_metadata
-            traits {
-              display_type
-              trait_count
-              trait_type
-            }
-            asset_contract {
-              address
-            }
           }
         }
       }
@@ -178,7 +166,7 @@ exports.createPages = async ({ graphql, actions }) => {
     createPage({
       path: `/profile/${tokenData.token_id}`,
       component: path.resolve(`src/components/profile.js`),
-      context: { token: tokenData },
+      context: { token_id: tokenData.token_id },
     });
   });
 };

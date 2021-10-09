@@ -5,11 +5,10 @@ import Layout from "../components/layout";
 import { Box, Container, withWidth, isWidthUp } from "@material-ui/core";
 import { Button } from "gatsby-theme-material-ui";
 import Header from "../components/header";
-import Img from "gatsby-image";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 
 const GalleryPage = (props) => {
   const tokens = props.data.allNftAssets.edges;
-
   function getCols(screenWidth) {
     if (isWidthUp("lg", screenWidth)) {
       return 5;
@@ -48,6 +47,7 @@ const GalleryPage = (props) => {
         >
           {tokens.map((token, i) => {
             const tokenData = token.node;
+            const image = getImage(tokenData.image);
             return (
               <ImageListItem
                 key={i}
@@ -59,7 +59,7 @@ const GalleryPage = (props) => {
               >
                 <Container>
                   <Button onClick={() => navigate("/gallery")}>
-                    <Img fixed={tokenData.image.childImageSharp.fixed} />
+                    <GatsbyImage image={image} layout="constrained" />
                   </Button>
                 </Container>
               </ImageListItem>
@@ -81,9 +81,7 @@ export const query = graphql`
           }
           image {
             childImageSharp {
-              fixed(width: 125, height: 125) {
-                ...GatsbyImageSharpFixed
-              }
+              gatsbyImageData(width: 125)
             }
           }
           token_id
