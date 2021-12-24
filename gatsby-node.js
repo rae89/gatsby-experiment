@@ -9,6 +9,7 @@ const graphql = require("gatsby");
 const { createRemoteFileNode } = require("gatsby-source-filesystem");
 
 const url = process.env.GATSBY_ETH_URL;
+const pinata_token = process.env.PINATA_JWT;
 
 function getContract() {
   var abi_ = [
