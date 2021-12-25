@@ -19,7 +19,7 @@ export default function ShopPage() {
           maxHeight: "max-content",
         }}
       >
-        <iframe
+        {/* <iframe
           src="https://opensea.io/collection/best-creature?embed=true"
           width="100%"
           height="100000px"
@@ -27,7 +27,7 @@ export default function ShopPage() {
           scrolling="no"
           overflow="visible"
           onload="window.parent.parent.scrollTo(0,0)"
-        ></iframe>
+        ></iframe> */}
       </div>
     </Layout>
   );

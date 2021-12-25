@@ -87,6 +87,29 @@ export default function ProfilePage({ data }) {
   );
 }
 
+// export const query = graphql`
+//   query($token_id: String!) {
+//     nftAssets(token_id: { eq: $token_id }) {
+//       image_thumbnail_url
+//       image {
+//         childImageSharp {
+//           gatsbyImageData(width: 300)
+//         }
+//       }
+//       token_id
+//       token_metadata
+//       traits {
+//         display_type
+//         trait_count
+//         trait_type
+//       }
+//       asset_contract {
+//         address
+//       }
+//     }
+//   }
+// `;
+
 export const query = graphql`
   query($token_id: String!) {
     nftAssets(token_id: { eq: $token_id }) {
@@ -98,11 +121,6 @@ export const query = graphql`
       }
       token_id
       token_metadata
-      traits {
-        display_type
-        trait_count
-        trait_type
-      }
       asset_contract {
         address
       }

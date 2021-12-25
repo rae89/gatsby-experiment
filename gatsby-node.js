@@ -8,24 +8,32 @@ require("dotenv").config({
 const graphql = require("gatsby");
 const { createRemoteFileNode } = require("gatsby-source-filesystem");
 
-const url = process.env.GATSBY_ETH_URL;
+//const url = process.env.GATSBY_ETH_URL;
+//const url = process.env.GATABY_MUMBAI_URL;
+const url = process.env.GATSBY_RINKEBY_URL;
 const pinata_token = process.env.PINATA_JWT;
 
+const CONTRACT = require("./src/data/MyNFT.json");
+
+//const smartContractAddress = "0x1301566b3cb584e550a02d09562041ddc4989b91";
+const smartContractAddress = "0xf43028EFCCA12B5b34e33C6E2672C0c3D6743308";
+
 function getContract() {
-  var abi_ = [
-    {
-      inputs: [
-        { indexed: true, name: "from", type: "address" },
-        { indexed: true, name: "to", type: "address" },
-        { indexed: true, name: "tokenId", type: "uint256" },
-      ],
-      name: "Transfer",
-      type: "event",
-    },
-  ];
+  // var abi_ = [
+  //   {
+  //     inputs: [
+  //       { indexed: true, name: "from", type: "address" },
+  //       { indexed: true, name: "to", type: "address" },
+  //       { indexed: true, name: "tokenId", type: "uint256" },
+  //     ],
+  //     name: "Transfer",
+  //     type: "event",
+  //   },
+  // ];
+
+  var abi_ = CONTRACT.abi;
 
   const web3Eth = new Web3Eth(Web3Eth.givenProvider || url);
-  const smartContractAddress = "0x1301566b3cb584e550a02d09562041ddc4989b91";
   const contract = new web3Eth.Contract(abi_, smartContractAddress);
   return contract;
 }
@@ -64,14 +72,15 @@ async function getAssets(contract_address, token_ids) {
     params: token_params,
   };
   try {
-    return await axios.get("https://api.opensea.io/api/v1/assets", request);
+    //opensea_url = "https://api.opensea.io/api/v1/assets";
+    opensea_url = "https://testnets-api.opensea.io/api/v1/assets";
+    return await axios.get(opensea_url, request);
   } catch (error) {
     console.log(error);
   }
 }
 
 async function fetchAssets(tokens) {
-  const smartContractAddress = "0x1301566b3cb584e550a02d09562041ddc4989b91";
   const result = [];
   token_chunks = chunk(tokens, 30);
   for (const item of token_chunks) {
