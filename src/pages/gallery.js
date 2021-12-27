@@ -30,6 +30,8 @@ const GalleryPage = (props) => {
   }
 
   const cols = getCols(props.width); // width is associated when using withWidth()
+  const rowHeight = "150";
+  const buttonStyle = { minHeight: `${rowHeight}px` };
   return (
     <Layout>
       <Header></Header>
@@ -43,7 +45,7 @@ const GalleryPage = (props) => {
             overflow: "hidden",
           }}
           cols={cols}
-          rowHeight={220}
+          rowHeight={rowHeight}
         >
           {tokens.map((token, i) => {
             const tokenData = token.node;
@@ -57,11 +59,15 @@ const GalleryPage = (props) => {
                   })
                 }
               >
-                <Container>
-                  <Button onClick={() => navigate("/gallery")}>
+                <Box>
+                  <Button
+                    style={buttonStyle}
+                    variant="contained"
+                    onClick={() => navigate("/gallery")}
+                  >
                     <GatsbyImage image={image} layout="constrained" />
                   </Button>
-                </Container>
+                </Box>
               </ImageListItem>
             );
           })}
