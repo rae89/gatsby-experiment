@@ -105,9 +105,12 @@ async function fetchTokenData(tokens, contract) {
     data["token_id"] = token_id;
     data["token_uri"] = token_uri;
     data["metadata"] = token_metadata;
+    // data[
+    //   "image_url"
+    // ] = `https://gateway.pinata.cloud/ipfs/${token_metadata.image}`;
     data[
       "image_url"
-    ] = `https://gateway.pinata.cloud/ipfs/${token_metadata.image}`;
+    ] = `https://cloudflare-ipfs.com/ipfs/${token_metadata.image}`;
 
     result.push(data);
   }
@@ -258,7 +261,7 @@ exports.onCreateNode = async ({
     const { createNode } = actions;
 
     /* Download the image and create the File node. Using gatsby-plugin-sharp and gatsby-transformer-sharp the node will become an ImageSharp. */
-
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     const fileNode = await createRemoteFileNode({
       url: node.image_url, // string that points to the URL of the image
       parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
