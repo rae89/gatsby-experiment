@@ -105,9 +105,6 @@ async function fetchTokenData(tokens, contract) {
     data["token_id"] = token_id;
     data["token_uri"] = token_uri;
     data["metadata"] = token_metadata;
-    // data[
-    //   "image_url"
-    // ] = `https://gateway.pinata.cloud/ipfs/${token_metadata.image}`;
     data[
       "image_url"
     ] = `https://cloudflare-ipfs.com/ipfs/${token_metadata.image}`;
@@ -136,59 +133,6 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
   const result = await fetchTokenData(tokens, contract);
 
   // map into these results and create nodes
-  // result.map((asset, i) => {
-  //   // Create your node object
-  //   const assetNode = {
-  //     // Required fields
-  //     id: `${i}`,
-  //     parent: `__SOURCE__`,
-  //     internal: {
-  //       type: `NFTAssets`, // name o the graphql query ----> allNFTAssets {}
-  //       // contentDigest will be added just after bus it is required
-  //     },
-  //     children: [],
-
-  //     // Other fields that you want to query with graphql
-  //     ["image___NODE"]: createNodeId(`asset-image-{${asset.token_id}}`),
-  //     opensea_id: asset.id,
-  //     token_id: asset.token_id,
-  //     num_sales: asset.num_sales,
-  //     background_color: asset.background_color,
-  //     image_url: asset.image_url,
-  //     image_preview_url: asset.image_preview_url,
-  //     image_thumbnail_url: asset.image_thumbnail_url,
-  //     image_original_url: asset.image_original_url,
-  //     animation_url: asset.animation_url,
-  //     animation_original_url: asset.animation_original_url,
-  //     asset_name: asset.asset_name,
-  //     description: asset.description,
-  //     external_link: asset.external_link,
-  //     asset_contract: asset.asset_contract,
-  //     permalink: asset.permalink,
-  //     collection: asset.collection,
-  //     token_metadata: asset.token_metadata,
-  //     owner: asset.owner,
-  //     creator: asset.creator,
-  //     traits: asset.traits,
-  //     last_sale: asset.last_sale,
-  //     top_bid: asset.top_bid,
-  //     listing_date: asset.listing_date,
-  //     is_presale: asset.is_presale,
-  //     transfer_fee_payment_token: asset.transfer_fee_payment_token,
-  //     transfer_fee: asset.transfer_fee,
-  //   };
-
-  //   // Get content digest of node. (Required field)
-  //   const contentDigest = crypto
-  //     .createHash(`md5`)
-  //     .update(JSON.stringify(assetNode))
-  //     .digest(`hex`);
-  //   // add it to assetNode
-  //   assetNode.internal.contentDigest = contentDigest;
-
-  //   // Create node with the gatsby createNode() API
-  //   createNode(assetNode);
-  // });
 
   result.map((asset, i) => {
     // Create your node object
