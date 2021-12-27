@@ -101,25 +101,42 @@ const GalleryPage = (props) => {
 //   }
 // `;
 
+// export const query = graphql`
+//   {
+//     allNftAssets {
+//       edges {
+//         node {
+//           asset_contract {
+//             address
+//           }
+//           image {
+//             childImageSharp {
+//               gatsbyImageData(width: 125)
+//             }
+//           }
+//           token_id
+//           token_metadata
+//           image_original_url
+//           image_preview_url
+//           image_thumbnail_url
+//           image_url
+//         }
+//       }
+//     }
+//   }
+// `;
+
 export const query = graphql`
   {
     allNftAssets {
       edges {
         node {
-          asset_contract {
-            address
-          }
           image {
             childImageSharp {
               gatsbyImageData(width: 125)
             }
           }
           token_id
-          token_metadata
-          image_original_url
-          image_preview_url
-          image_thumbnail_url
-          image_url
         }
       }
     }

@@ -52,22 +52,6 @@ export default function ProfilePage({ data }) {
               <Typography variant="h6">Token ID: {token.token_id}</Typography>
             </Box>
           </Container>
-          <Container>
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              minHeight="10vh"
-            >
-              <Button
-                variant="contained"
-                target="_blank"
-                href={token.token_metadata}
-              >
-                Metadata
-              </Button>
-            </Box>
-          </Container>
           <Container maxWidth="xs">
             <Box
               display="flex"
@@ -76,7 +60,7 @@ export default function ProfilePage({ data }) {
               minHeight="20vh"
             >
               <nft-card
-                contractAddress={token.asset_contract.address}
+                contractAddress={token.asset_contract}
                 tokenId={token.token_id}
               ></nft-card>
             </Box>
@@ -87,43 +71,24 @@ export default function ProfilePage({ data }) {
   );
 }
 
-// export const query = graphql`
-//   query($token_id: String!) {
-//     nftAssets(token_id: { eq: $token_id }) {
-//       image_thumbnail_url
-//       image {
-//         childImageSharp {
-//           gatsbyImageData(width: 300)
-//         }
-//       }
-//       token_id
-//       token_metadata
-//       traits {
-//         display_type
-//         trait_count
-//         trait_type
-//       }
-//       asset_contract {
-//         address
-//       }
-//     }
-//   }
-// `;
-
 export const query = graphql`
   query($token_id: String!) {
     nftAssets(token_id: { eq: $token_id }) {
-      image_thumbnail_url
       image {
         childImageSharp {
           gatsbyImageData(width: 300)
         }
       }
       token_id
-      token_metadata
-      asset_contract {
-        address
+      token_metadata {
+        medium
+        name
+        asset_name
+        description
+        image
+        series
       }
+      asset_contract
     }
   }
 `;

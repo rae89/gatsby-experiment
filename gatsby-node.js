@@ -11,12 +11,15 @@ const { createRemoteFileNode } = require("gatsby-source-filesystem");
 //const url = process.env.GATSBY_ETH_URL;
 //const url = process.env.GATABY_MUMBAI_URL;
 const url = process.env.GATSBY_RINKEBY_URL;
-const pinata_token = process.env.PINATA_JWT;
+const PINATA_TOKEN = process.env.PINATA_JWT;
 
 const CONTRACT = require("./src/data/MyNFT.json");
+const {
+  default: SelectInput,
+} = require("@material-ui/core/Select/SelectInput");
 
 //const smartContractAddress = "0x1301566b3cb584e550a02d09562041ddc4989b91";
-const smartContractAddress = "0xf43028EFCCA12B5b34e33C6E2672C0c3D6743308";
+const smartContractAddress = "0x1A2Beeb13c731a6Fd39a552BE1a7240692093598";
 
 function getContract() {
   // var abi_ = [
@@ -80,6 +83,37 @@ async function getAssets(contract_address, token_ids) {
   }
 }
 
+async function fetchTokenURI(tokenID, contract) {
+  return contract.methods.tokenURI(tokenID).call();
+}
+
+async function getMetadata(token_uri) {
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  const response = await axios.get(token_uri, {
+    headers: { Authorization: `Bearer ${PINATA_TOKEN}` },
+  });
+  return response.data;
+}
+
+async function fetchTokenData(tokens, contract) {
+  const result = [];
+  token_chunks = chunk(tokens, 30);
+  for (const token_id of tokens) {
+    const token_uri = await fetchTokenURI(token_id, contract);
+    const token_metadata = await getMetadata(token_uri);
+    var data = {};
+    data["token_id"] = token_id;
+    data["token_uri"] = token_uri;
+    data["metadata"] = token_metadata;
+    data[
+      "image_url"
+    ] = `https://gateway.pinata.cloud/ipfs/${token_metadata.image}`;
+
+    result.push(data);
+  }
+  return result;
+}
+
 async function fetchAssets(tokens) {
   const result = [];
   token_chunks = chunk(tokens, 30);
@@ -87,7 +121,7 @@ async function fetchAssets(tokens) {
     const response = await getAssets(smartContractAddress, item);
     result.push(...response.data["assets"]);
   }
-  return await result;
+  return result;
 }
 
 exports.sourceNodes = async ({ actions, createNodeId }) => {
@@ -95,10 +129,64 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
 
   const contract = getContract();
   const events = await fetchTranserEvents(contract);
-  const tokens = await getTokens(events);
-  const result = await fetchAssets(tokens);
+  const tokens = await getTokens(events); //const result = await fetchAssets(tokens);
+  const result = await fetchTokenData(tokens, contract);
 
   // map into these results and create nodes
+  // result.map((asset, i) => {
+  //   // Create your node object
+  //   const assetNode = {
+  //     // Required fields
+  //     id: `${i}`,
+  //     parent: `__SOURCE__`,
+  //     internal: {
+  //       type: `NFTAssets`, // name o the graphql query ----> allNFTAssets {}
+  //       // contentDigest will be added just after bus it is required
+  //     },
+  //     children: [],
+
+  //     // Other fields that you want to query with graphql
+  //     ["image___NODE"]: createNodeId(`asset-image-{${asset.token_id}}`),
+  //     opensea_id: asset.id,
+  //     token_id: asset.token_id,
+  //     num_sales: asset.num_sales,
+  //     background_color: asset.background_color,
+  //     image_url: asset.image_url,
+  //     image_preview_url: asset.image_preview_url,
+  //     image_thumbnail_url: asset.image_thumbnail_url,
+  //     image_original_url: asset.image_original_url,
+  //     animation_url: asset.animation_url,
+  //     animation_original_url: asset.animation_original_url,
+  //     asset_name: asset.asset_name,
+  //     description: asset.description,
+  //     external_link: asset.external_link,
+  //     asset_contract: asset.asset_contract,
+  //     permalink: asset.permalink,
+  //     collection: asset.collection,
+  //     token_metadata: asset.token_metadata,
+  //     owner: asset.owner,
+  //     creator: asset.creator,
+  //     traits: asset.traits,
+  //     last_sale: asset.last_sale,
+  //     top_bid: asset.top_bid,
+  //     listing_date: asset.listing_date,
+  //     is_presale: asset.is_presale,
+  //     transfer_fee_payment_token: asset.transfer_fee_payment_token,
+  //     transfer_fee: asset.transfer_fee,
+  //   };
+
+  //   // Get content digest of node. (Required field)
+  //   const contentDigest = crypto
+  //     .createHash(`md5`)
+  //     .update(JSON.stringify(assetNode))
+  //     .digest(`hex`);
+  //   // add it to assetNode
+  //   assetNode.internal.contentDigest = contentDigest;
+
+  //   // Create node with the gatsby createNode() API
+  //   createNode(assetNode);
+  // });
+
   result.map((asset, i) => {
     // Create your node object
     const assetNode = {
@@ -113,32 +201,10 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
 
       // Other fields that you want to query with graphql
       ["image___NODE"]: createNodeId(`asset-image-{${asset.token_id}}`),
-      opensea_id: asset.id,
       token_id: asset.token_id,
-      num_sales: asset.num_sales,
-      background_color: asset.background_color,
       image_url: asset.image_url,
-      image_preview_url: asset.image_preview_url,
-      image_thumbnail_url: asset.image_thumbnail_url,
-      image_original_url: asset.image_original_url,
-      animation_url: asset.animation_url,
-      animation_original_url: asset.animation_original_url,
-      asset_name: asset.asset_name,
-      description: asset.description,
-      external_link: asset.external_link,
-      asset_contract: asset.asset_contract,
-      permalink: asset.permalink,
-      collection: asset.collection,
-      token_metadata: asset.token_metadata,
-      owner: asset.owner,
-      creator: asset.creator,
-      traits: asset.traits,
-      last_sale: asset.last_sale,
-      top_bid: asset.top_bid,
-      listing_date: asset.listing_date,
-      is_presale: asset.is_presale,
-      transfer_fee_payment_token: asset.transfer_fee_payment_token,
-      transfer_fee: asset.transfer_fee,
+      asset_contract: smartContractAddress,
+      token_metadata: asset.metadata,
     };
 
     // Get content digest of node. (Required field)
@@ -194,7 +260,7 @@ exports.onCreateNode = async ({
     /* Download the image and create the File node. Using gatsby-plugin-sharp and gatsby-transformer-sharp the node will become an ImageSharp. */
 
     const fileNode = await createRemoteFileNode({
-      url: node.image_original_url, // string that points to the URL of the image
+      url: node.image_url, // string that points to the URL of the image
       parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
       store, // Gatsby's redux store
       getCache, // get Gatsby's cache
