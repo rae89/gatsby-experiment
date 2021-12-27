@@ -40,10 +40,6 @@ class Sidebar extends React.Component {
       title: "Gallery",
       path: "/gallery",
     },
-    {
-      title: "Shop",
-      path: "/shop",
-    },
   ];
 
   constructor(props) {
