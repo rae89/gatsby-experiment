@@ -56,7 +56,7 @@ export default function ProfilePage({ data }) {
               <Typography variant="h6">Token ID: {token.token_id}</Typography>
             </Box>
           </Container>
-          <DenseTable />
+          <DenseTable metadata={token.token_metadata} />
           <Button
             variant="contained"
             target="_blank"

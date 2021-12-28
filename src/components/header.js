@@ -57,11 +57,11 @@ class Header extends React.Component {
             >
               <Menu />
             </IconButton>
-            <Button onClick={() => navigate("/gallery")} color="white">
-              <Typography variant="h6" color="white">
+            <Typography variant="h6" color="white">
+              <Button onClick={() => navigate("/gallery")}>
                 Non Fungible Tokens
-              </Typography>
-            </Button>
+              </Button>
+            </Typography>
           </Toolbar>
         </AppBar>
         <Sidebar open={this.state.open} toggle={this.toggleDrawer} />

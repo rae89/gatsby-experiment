@@ -10,15 +10,12 @@ function createData(key, value) {
   return { key, value };
 }
 
-const rows = [
-  createData("Medium", "Test Medium"),
-  createData("Name", "Test Name"),
-  createData("Asset Name", "Test Asset Name"),
-  createData("Description", "This is just a test Description"),
-  createData("Series", "The Test Series"),
-];
-
-export default function DenseTable() {
+export default function DenseTable({ metadata }) {
+  const rows = [];
+  for (var key in metadata) {
+    var row = createData(key, metadata[key]);
+    rows.push(row);
+  }
   return (
     <TableContainer
       style={{
