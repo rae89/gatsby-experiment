@@ -33,7 +33,14 @@ export default function ProfilePage({ data }) {
               top="20"
               bottom="-10"
             >
-              <GatsbyImage image={image} layout="constrained" />
+              <GatsbyImage
+                style={{
+                  border: "5px solid rebeccapurple",
+                  borderRadius: 5,
+                }}
+                image={image}
+                layout="constrained"
+              />
             </Box>
           </Container>
           <Container>
@@ -50,6 +57,18 @@ export default function ProfilePage({ data }) {
             </Box>
           </Container>
           <DenseTable />
+          <Button
+            variant="contained"
+            target="_blank"
+            href={
+              "https://testnets.opensea.io/assets/" +
+              token.asset_contract +
+              "/" +
+              token.token_id
+            }
+          >
+            Buy Now
+          </Button>
           <Container maxWidth="xs">
             <Box
               display="flex"

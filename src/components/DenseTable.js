@@ -20,7 +20,13 @@ const rows = [
 
 export default function DenseTable() {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      style={{
+        border: "5px solid rebeccapurple",
+        borderRadius: 5,
+      }}
+      component={Paper}
+    >
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableBody>
           {rows.map((row) => (
