@@ -10,6 +10,8 @@ import {
   Hidden,
 } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
+import { Link } from "gatsby";
+import { navigate } from "gatsby-link";
 
 import Sidebar from "./Sidebar";
 
@@ -55,9 +57,11 @@ class Header extends React.Component {
             >
               <Menu />
             </IconButton>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              Non Fungible Tokens
-            </Typography>
+            <Button onClick={() => navigate("/gallery")} color="white">
+              <Typography variant="h6" color="white">
+                Non Fungible Tokens
+              </Typography>
+            </Button>
           </Toolbar>
         </AppBar>
         <Sidebar open={this.state.open} toggle={this.toggleDrawer} />
