@@ -1,9 +1,9 @@
 import React from "react";
 import Layout from "../components/layout";
+import DenseTable from "../components/DenseTable";
 import { Box, Container } from "@material-ui/core";
 import { Typography, Stack } from "@mui/material";
 import { Button } from "gatsby-theme-material-ui";
-import Helmet from "react-helmet";
 import Header from "../components/header";
 import { graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
@@ -16,9 +16,6 @@ export default function ProfilePage({ data }) {
       <Container maxWidth="lg">
         <Header></Header>
       </Container>
-      <Helmet>
-        <script src="https://unpkg.com/embeddable-nfts/dist/nft-card.min.js"></script>
-      </Helmet>
       <Box
         display="flex"
         justifyContent="center"
@@ -52,18 +49,14 @@ export default function ProfilePage({ data }) {
               <Typography variant="h6">Token ID: {token.token_id}</Typography>
             </Box>
           </Container>
+          <DenseTable />
           <Container maxWidth="xs">
             <Box
               display="flex"
               justifyContent="center"
               alignItems="center"
               minHeight="20vh"
-            >
-              <nft-card
-                contractAddress={token.asset_contract}
-                tokenId={token.token_id}
-              ></nft-card>
-            </Box>
+            ></Box>
           </Container>
         </Stack>
       </Box>

@@ -205,7 +205,7 @@ exports.onCreateNode = async ({
     const { createNode } = actions;
 
     /* Download the image and create the File node. Using gatsby-plugin-sharp and gatsby-transformer-sharp the node will become an ImageSharp. */
-    await new Promise((resolve) => setTimeout(resolve, 10000));
+    // await new Promise((resolve) => setTimeout(resolve, 10000));
     const fileNode = await createRemoteFileNode({
       url: node.image_url, // string that points to the URL of the image
       parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
